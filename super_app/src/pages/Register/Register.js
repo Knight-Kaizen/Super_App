@@ -2,6 +2,8 @@ import React from "react"
 import RegisterForm from "../../components/RegisterForm/RegisterForm.js"
 import LeftBanner from "../../components/LeftBanner/LeftBanner.js"
 import styles from "./Register.module.css"
+
+
 export default 
 
 function RegisterPage(){

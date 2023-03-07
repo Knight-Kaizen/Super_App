@@ -1,6 +1,6 @@
 import React from "react"
 import styles from "./RegisterForm.module.css"
-
+import { useNavigate } from "react-router-dom"
 export default
     function RegisterForm() {
 
@@ -9,9 +9,9 @@ export default
     )
 
     // error state handler 
-    const [errors, setErrors] = React.useState({});
+    const [errors, setErrors] = React.useState({def:''});
 
-
+    const [nextPage, setNextPage] = React.useState(false);
     function handleChange(event) {
         const { name, value, type, checked } = event.target
         setFormData(prevFormData => {
@@ -20,8 +20,9 @@ export default
                 [name]: type == "checkbox" ? checked : value
             }
         });
-        // console.log(formData)   Doubt ?? why is it lagging!!!
+
     }
+    const navigate = useNavigate();
     function handleSubmit(event) {
         event.preventDefault();
         console.log("final Form Data: ", formData)
@@ -29,28 +30,37 @@ export default
         //Perform Validation
 
         setErrors(validate(formData));
-
+        console.log(errors);
         
-        console.log("erros ", errors);
-
-        // Doubt ?? Showing errrors on second click only
-
     }
+    React.useEffect(()=>{
+        if (Object.keys(errors).length == 0) {
+            navigate("/profile");
+        }
+    }, [errors])
 
-    function validate(formData){
+    // React.useEffect(()=>{
+    //     if (nextPage) {
+    //                 navigate("/profile");
+    //             }
+    //    }, [nextPage])
+    
+    
+
+    function validate(formData) {
         const errors = {};
 
-        if(!formData.fullName){
+        if (!formData.fullName) {
             errors.fullName = 'Name is required';
         }
-        if(!formData.email){
+        if (!formData.email) {
             errors.email = 'Email is required';
         }
-        else if(!/\S+@\S+\.\S+/.test(formData.email)){
+        else if (!/\S+@\S+\.\S+/.test(formData.email)) {
             errors.email = 'Email is invalid';
         }
 
-        if(!formData.userName){
+        if (!formData.userName) {
             errors.userName = "userName is required";
         }
         if (!formData.mobileNumber) {
@@ -61,8 +71,8 @@ export default
 
         if (!formData.canShare) {
             errors.canShare = 'Required';
-          }
-        
+        }
+
         return errors;
 
     }
@@ -72,13 +82,13 @@ export default
 
             <div className={styles.top}>
                 <h1>
-                    <span>Super App</span>
+                    <span className={styles.textGreen}>Super App</span>
                 </h1>
                 <h4>
                     Create your new account
                 </h4>
                 <h3>
-                    Email  <span>|</span> Google
+                    Email  <span className={styles.textGreen}>|</span> Google
                 </h3>
             </div>
 
@@ -116,7 +126,7 @@ export default
                             onChange={handleChange}
                             name="mobileNumber"
                             value={formData.mobileNumber}
-                            // className = {styles.mobileNumber}
+
                         />
                         {errors.mobileNumber && <span className={styles.error}>{errors.mobileNumber}</span>}
                     </div>
@@ -130,9 +140,10 @@ export default
                         />
                         <label htmlFor="canShare" className={styles.tc}>Share my registration data with Superapp</label>
                     </div>
-                    
+
                     {errors.canShare && <span className={styles.error2}>{errors.canShare}</span>}
-                    <button className={styles.submitBtn}>SIGN UP</button>
+                    <button className={styles.submitBtn} >SIGN UP</button>
+
                 </form>
                 <div className={styles.tc1}>
                     <p>By clicking on Sign up. you agree to Superapp <span>Terms and Conditions of Use</span></p>
