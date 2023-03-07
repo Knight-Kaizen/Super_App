@@ -3,15 +3,18 @@ import styles from "./RegisterForm.module.css"
 import { useNavigate } from "react-router-dom"
 export default
     function RegisterForm() {
-
-    const [formData, setFormData] = React.useState(
-        { fullName: '', userName: "", email: "", mobileNumber: "", canShare: '' }
-    )
+    
+    const initialFormData = {fullName: '', userName: "", email: "", mobileNumber: "", canShare: ''};
+    if (localStorage.getItem('formData') == null) {
+        localStorage.setItem('formData', JSON.stringify(initialFormData));
+    }
+    const storedFormData =  JSON.parse(localStorage.getItem('formData'));
+    const [formData, setFormData] = React.useState(storedFormData)
 
     // error state handler 
     const [errors, setErrors] = React.useState({def:''});
 
-    const [nextPage, setNextPage] = React.useState(false);
+    
     function handleChange(event) {
         const { name, value, type, checked } = event.target
         setFormData(prevFormData => {
@@ -20,7 +23,7 @@ export default
                 [name]: type == "checkbox" ? checked : value
             }
         });
-
+        localStorage.setItem('formData', JSON.stringify(formData));
     }
     const navigate = useNavigate();
     function handleSubmit(event) {
@@ -33,18 +36,14 @@ export default
         console.log(errors);
         
     }
+    
     React.useEffect(()=>{
         if (Object.keys(errors).length == 0) {
             navigate("/profile");
         }
     }, [errors])
 
-    // React.useEffect(()=>{
-    //     if (nextPage) {
-    //                 navigate("/profile");
-    //             }
-    //    }, [nextPage])
-    
+   
     
 
     function validate(formData) {

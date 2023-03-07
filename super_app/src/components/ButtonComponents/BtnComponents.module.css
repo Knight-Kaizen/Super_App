@@ -6,6 +6,7 @@ body{
 .main{
     width: 33%;
     height: 33%;
+    cursor: default;
 }
 .content{
     width: 80%;

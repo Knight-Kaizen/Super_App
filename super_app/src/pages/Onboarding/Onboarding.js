@@ -41,17 +41,6 @@ function OnboardingPage(){
         )
     })
 
-    React.useEffect(()=>{
-        if(displayButtons.length > 0){
-            console.log("success");
-            setCategorySelected(false);
-        }
-        else{
-            console.log("Select atleast 1");
-            setCategorySelected(true);
-        }
-    }, [displayButtons])
-
     function handleClick(id){
         console.log("clicked" , id);
         
@@ -64,6 +53,18 @@ function OnboardingPage(){
         })
         
     }
+    React.useEffect(()=>{
+        localStorage.setItem('selectedCards', JSON.stringify(Buttons));
+        console.log(displayButtons);
+        if(displayButtons.length > 0){
+            console.log("success");
+            setCategorySelected(false);
+        }
+        else{
+            console.log("Select atleast 1");
+            setCategorySelected(true);
+        }
+    }, [displayButtons])
 
     return(
         <div className={styles.main}>
