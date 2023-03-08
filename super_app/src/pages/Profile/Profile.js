@@ -14,7 +14,7 @@ export default
                         {<ProfileComponent />}
                     </div>
                     <div className={styles.bottom}>
-                        {/* {<WeatherApiComponent />} */}
+                        {<WeatherApiComponent />}
                     </div>
                 </div>
                 <div className={styles.right}>
