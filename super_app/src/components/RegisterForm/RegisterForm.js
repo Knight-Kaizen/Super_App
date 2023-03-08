@@ -36,10 +36,10 @@ export default
         console.log(errors);
         
     }
-    
+
     React.useEffect(()=>{
         if (Object.keys(errors).length == 0) {
-            navigate("/profile");
+            navigate("/onboarding");
         }
     }, [errors])
 
