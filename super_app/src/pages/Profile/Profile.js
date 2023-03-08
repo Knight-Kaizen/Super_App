@@ -18,7 +18,7 @@ export default
                     </div>
                 </div>
                 <div className={styles.right}>
-                    {/* {<NewsApiComponent />} */}
+                    {<NewsApiComponent />}
                 </div>
             </div>
             <div className={styles.minor2}>
