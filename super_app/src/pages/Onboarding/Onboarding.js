@@ -4,6 +4,7 @@ import ButtonComponents from "../../components/ButtonComponents/BtnComponents"
 import styles from "./Onboarding.module.css"
 
 import OnboardingStates from "./OnboardingStates"
+import { useNavigate } from "react-router-dom"
 
 
 export default
@@ -29,13 +30,19 @@ export default
         />)
     })
 
-
+    const [nextPage, setNextPage] = React.useState(false);
 
     const Buttons = selected.filter((card) => {
         if (card.on == true) {
             return card;
         }
     })
+    const navigate = useNavigate();
+    React.useEffect(()=>{
+        if(nextPage){
+            navigate("/profile")
+        }
+    }, [nextPage])
 
 
     const displayButtons = Buttons.map((card) => {
@@ -104,13 +111,8 @@ export default
                 <button className={styles.BtnNextPage}
                     onClick={() => {
                         if (displayButtons.length > 0) {
-
-                            console.log("success");
                             setCategorySelected(false);
-                        }
-                        else {
-                            console.log("Select atleast 1");
-                            setCategorySelected(true);
+                            setNextPage(true);
                         }
                     }}
                 >Next Page</button>

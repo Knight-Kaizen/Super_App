@@ -14,14 +14,17 @@ export default
 
 
     const getNews = async () => {
+        let response;
         try {
-            const response = await fetch(API_ENDPOINT);
-
+            response = await fetch(API_ENDPOINT);
+        } catch (error) {
+            console.log('There was an error', error);
+        }
+        if (response?.ok) {
             setNews(await response.json());
             await setOk(true);
-        }
-        catch (error) {
-            console.log('error encountered');
+        } else {
+            console.log(`HTTP Response Code: ${response?.status}`)
         }
     }
 
@@ -29,14 +32,18 @@ export default
         getNews();
     }, [])
 
+    
+
     React.useEffect(() => {
         if (ok) {
-            setNewsImage(news.articles[0].urlToImage);
-            setNewsDescription(news.articles[0].description);
-            setNewsTitle(news.articles[0].title);
+            let indx = 0;
+            console.log(indx);
+            setNewsImage(news.articles[indx].urlToImage);
+            setNewsDescription(news.articles[indx].description);
+            setNewsTitle(news.articles[indx].title);
         }
     }, [news])
-    // console.log(news);
+    
 
     const date = new Date();
     const day = date.getDay();
@@ -54,7 +61,8 @@ export default
             <div className={styles.top}>
                 <img src={newsImage} className={styles.image1}></img>
                 <div className={styles.text1}>
-                    <h2 className={styles.text2}>{newsTitle}</h2>
+                    <h2 className={styles.text2}>{newsTitle}
+                    </h2>
                     <pre className={styles.text3}>{day < 10 && 0}{day}-{month < 10 && 0}{month}-{year} | {hours < 10 && 0}{hours}:{minutes < 10 && 0}{minutes} {amOrPm}</pre>
                 </div>
             </div>

@@ -1,15 +1,11 @@
 import React from "react";
 import styles from "./WeatherApiComponent.module.css"
-// import humidityInnerImg from 
-// import humidityOuterImg from
-// // import windImg from "../../../public/Images/wind.png"
-// import pressureImg from 
+
 
 export default
     function WeatherApiComponent() {
     const API_ENDPOINT = 'http://api.weatherapi.com/v1/current.json?key=a31d9e2dc6a7438098114901230803&q=India&aqi=yes';
 
-    // Doubt: If api gives error why component does not render?? ...follow up
     const [weather, setWeather] = React.useState({});
     const [dataFetched, setDataFetched] = React.useState(false);
 
@@ -21,17 +17,23 @@ export default
     const [humidity, setHumidity] = React.useState('');
 
     const getData = async () => {
-        try {
-            const response = await fetch(API_ENDPOINT);
+        let response;
 
+        try {
+            response = await fetch(API_ENDPOINT);
+        } catch (error) {
+            console.log('There was an error', error);
+        }
+
+        if (response?.ok) {
             setWeather(await response.json());
             await setDataFetched(true);
+        } else {
+            console.log(`HTTP Response Code: ${response?.status}`)
         }
-        catch (error) {
-            console.log('Error : ', error);
-        }
-
+        
     }
+
 
     React.useEffect(() => {
         getData();
@@ -58,8 +60,8 @@ export default
     const minutes = date.getMinutes();
     let hours = date.getHours();
     var amOrPm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12; 
-    hours = hours ? hours : 12; 
+    hours = hours % 12;
+    hours = hours ? hours : 12;
 
     return (
         <div className={styles.main}>
