@@ -1,6 +1,7 @@
 body{
     margin: 0;
     padding: 0;
+    font-size: inherit;
 }
 
 .main{
@@ -20,16 +21,19 @@ body{
 }
 .text{
     color: white;
+    font-size: inherit;
 }
 .close{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: #085C00;
-    font-size: large;
+    font-size: inherit;
 }
 .blue{
     background-color: #9F94FF;
+    font-size: small;
 
 }
 .blueClose{
     color: #0000006B;
+    font-size: smaller;
 }
