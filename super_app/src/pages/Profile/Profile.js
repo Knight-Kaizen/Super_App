@@ -3,9 +3,15 @@ import ProfileComponent from "../../components/ProfileComponent/ProfileComponent
 import WeatherApiComponent from "../../components/WeatherApiComponent/WeatherApiComponent";
 import NewsApiComponent from "../../components/NewsApiComponent/NewsApiComponent";
 import TimerComponent from "../../components/TimerComponent/TimerComponent";
+import { useNavigate } from "react-router-dom"
 import styles from "./Profile.module.css"
 export default
     function ProfilePage() {
+
+        const navigate = useNavigate();
+        function handleClick(){
+            navigate("/entertainment")
+        }
     return (
 
         <div className={styles.main}>
@@ -36,7 +42,9 @@ export default
                 </div>
             </div>
             <div className={styles.bottom}>
-                <button className={styles.button}>Next Page</button>
+                <button className={styles.button}
+                    onClick = {handleClick}
+                >Next Page</button>
             </div>
         </div>
     )
